@@ -16,7 +16,9 @@ model Poll {
   createdAt DateTime @default(now())
   updatedAt DateTime @default(now())
 
+  // prisma relations - Not present in the final database
   options PollOption[]
+  vote    Vote[]
 }
 
 model PollOption {
@@ -24,5 +26,21 @@ model PollOption {
   title  String
   pollId String
 
-  poll Poll @relation(fields: [pollId], references: [id])
+  // prisma relations - Not present in the final database
+  poll Poll   @relation(fields: [pollId], references: [id])
+  vote Vote[]
+}
+
+model Vote {
+  id           Int      @id @default(autoincrement())
+  createdAt    DateTime @default(now())
+  sessionId    String
+  pollOptionId String
+  pollId       String
+
+  // prisma relations - Not present in the final database
+  pollOption PollOption @relation(fields: [pollOptionId], references: [id])
+  poll       Poll       @relation(fields: [pollId], references: [id])
+
+  @@unique([sessionId, pollId]) //constraint to prevent multiple votes from the same session
 }
