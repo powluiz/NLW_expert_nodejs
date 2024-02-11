@@ -39,7 +39,7 @@ npm run dev
 
 ## How to test
 
-Use alguma ferramentas para teste de API como Postman, Insomnia ou Hoppscotch.
+Use any tool to test APIs, like Postman, Insomnia or Hoppscotch.
 
 Test the endpoints as per the examples below, where `server_base_url` is the same as `localhost:3333`.
 
