@@ -1,14 +1,20 @@
 import { FastifyInstance } from "fastify";
+import { voting } from "../../utils/voting-pubsub";
+import z from "zod";
 
 export const pollResults = async (app: FastifyInstance) => {
   app.get(
     "/polls/:pollId/results",
     { websocket: true },
     (connection, request) => {
-      connection.socket.on("message", (message: string) => {
-        connection.socket.send(`Hello, you sent ${message}`);
+      const getPollParams = z.object({
+        pollId: z.string().uuid(),
+      });
 
-        // subscribe to channel with pollId
+      const { pollId } = getPollParams.parse(request.params);
+
+      voting.subscribe(pollId, (message) => {
+        connection.socket.send(JSON.stringify(message));
       });
     }
   );

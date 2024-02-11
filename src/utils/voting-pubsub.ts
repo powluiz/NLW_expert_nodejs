@@ -23,4 +23,4 @@ class VotingPubSub {
   }
 }
 
-export const votingPubSub = new VotingPubSub();
+export const voting = new VotingPubSub();
