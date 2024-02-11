@@ -7,6 +7,8 @@ export const pollResults = async (app: FastifyInstance) => {
     (connection, request) => {
       connection.socket.on("message", (message: string) => {
         connection.socket.send(`Hello, you sent ${message}`);
+
+        // subscribe to channel with pollId
       });
     }
   );
